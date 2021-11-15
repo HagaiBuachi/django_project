@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MOVIES</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+
+</head>
+<body>
+<div class="wrapper">
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="HP">
+
+        <h1><a href="{% url 'movies:home' %}" ><i class="bi bi-emoji-sunglasses-fill"></i>HomeTV</a></h1>
+        <h2 id="hagai"></h2>
+
+    </a>
+  </div>
+</nav>
+       <nav>
+            <ul>
+
+               {% if user.is_authenticated %}
+                <li>
+                    <form class="logout-link" action="{% url 'accounts:Logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+            <li><a href="{% url 'movies:create' %}" class="highlight"> Add New Movie!</a> </li>
+
+
+             {% else %}
+
+            <li><a href="{% url 'accounts:Login' %}">Login</a></li>
+            <li><a href="{% url 'accounts:SignUp' %}">Signup</a></li>
+
+             {% endif %}
+
+            </ul>
+        </nav>
+
+     {% block content %}
+     {% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

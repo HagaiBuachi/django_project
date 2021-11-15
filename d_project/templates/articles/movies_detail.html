@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<img src="{{ articles.image.url }}" width="200px" height="300" style="display: inline-block;" >
+<div id="movie_plot">
+      <h2>{{articles.title}}</h2>
+      <p>{{articles.plot}}</p>
+    {{articles.category}}
+   <p>{{articles.cast}}</p>
+ <p>{{articles.year}}</p>
+
+</div>
+{% if isReviewAllowed == True %}
+<div class="isReviewAllowed">
+        <div class="nav_button"><a class="new_movie" href="{% url 'movies:review' slug=articles.slug %}">Create Review</a></div>
+</div>
+{% endif %}
+{% for review in all_reviews %}
+  {% if review.Review == movie.title %}
+<div class="all_reviews">
+            <div class="review">
+                <p><span style="font-weight: normal;">Reviewed by: </span> {{review.user}} </p>
+                <p><span style="font-weight: normal;">Description: </span>{{review.text}}</p>
+                <form style="text-align: center;" action="{% url 'movies:like' slug=articles.slug %}" method="post">
+                {% csrf_token %}
+                <button style="color: white; background: #104e89;" type="submit", name="review_id", value="{{ review.id }}", class="btn btn-primary btn-sm">Like</button> {{review.count_likes}}
+                </form>
+            </div>
+        {% elif review.movie.title == movie.title %}
+            <div class="review">
+            <p><span style="font-weight: normal;">Reviewed by: </span> {{review.user}} </p>
+            <p><span style="font-weight: normal;">Description: </span>{{review.text}}</p>
+            </div>
+
+     {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

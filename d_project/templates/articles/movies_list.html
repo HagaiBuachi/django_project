@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1>Movies To Watch</h1>
+{% for article in articles %}
+  <a href="{% url 'movies:detail' article.slug %}">
+    <img src="{{ article.image.url }}" width="200" height="300"></a>
+{% endfor %}
+{% endblock %}
